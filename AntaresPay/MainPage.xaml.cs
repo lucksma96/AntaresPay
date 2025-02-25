@@ -7,6 +7,12 @@ namespace AntaresPay
         {
             InitializeComponent();
         }
-    }
 
+        async void OperationButtons_Clicked(object sender, EventArgs args)
+        {
+            var operation = ((Button)sender).Text;
+
+            await Shell.Current.GoToAsync($"{nameof(OperationPage)}?Operation={operation}");
+        }
+    }
 }

@@ -17,8 +17,13 @@ namespace AntaresPay
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<MainPage>();
+
+            builder.Services.AddTransient<OperationPage>();
+            builder.Services.AddTransient<OperationViewModel>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

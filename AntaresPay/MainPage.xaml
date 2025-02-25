@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AntaresPay"
              x:Class="AntaresPay.MainPage">
 
     <VerticalStackLayout
@@ -25,22 +26,11 @@
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Select monetary operation" />
 
-        <CollectionView>
-            <CollectionView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Pagar</x:String>
-                    <x:String>Cobrar</x:String>
-                    <x:String>Extrato</x:String>
-                </x:Array>
-            </CollectionView.ItemsSource>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <VerticalStackLayout Padding="5">
-                        <Button Text="{Binding .}"></Button>
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <VerticalStackLayout Padding="5" Spacing="5">
+            <Button Text="Pagar" Clicked="OperationButtons_Clicked"></Button>
+            <Button Text="Cobrar" Clicked="OperationButtons_Clicked"></Button>
+            <Button Text="Extrato" Clicked="OperationButtons_Clicked"></Button>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 
 </ContentPage>

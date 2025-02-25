@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:local="clr-namespace:AntaresPay"
              x:Class="AntaresPay.OperationPage"
-             Title="Operação">
-    <!--TODO: change page title based on operation selected-->
-
+             xmlns:local="clr-namespace:AntaresPay"
+             xmlns:viewmodel="clr-namespace:AntaresPay"
+             x:DataType="viewmodel:OperationViewModel"
+             Title="{Binding Operation}">
     <!--<Grid ColumnDefinitions=".33*, .33*, .33*" RowDefinitions="Auto, .25*, .25*, .25*, .25*" Padding="10" ColumnSpacing="15" RowSpacing="15">
         <Entry Keyboard="Numeric" HorizontalTextAlignment="End" Placeholder="₳ 100" FontSize="24" Grid.ColumnSpan="3">
             <Entry.Behaviors>
@@ -37,7 +37,7 @@
                 <local:CurrencyBehavior />
             </Entry.Behaviors>
         </Entry>
-        <Button Text="Cancelar" Grid.Column="0" Grid.Row="1"></Button>
+        <Button Text="Cancelar" Grid.Column="0" Grid.Row="1" Command="{Binding ReturnCommand}"></Button>
         <Button Text="Confirmar" Grid.Column="1" Grid.Row="1"></Button>
     </Grid>
 </ContentPage>
