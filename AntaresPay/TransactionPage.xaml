@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AntaresPay.TransactionPage"
+             Title="Transação">
+    <VerticalStackLayout>
+        <Label 
+            Text="Aproxime o cartão"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <HorizontalStackLayout Padding="30" Spacing="15">
+            <Path Fill="Grey" Stroke="Black">
+                <Path.Data>
+                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+                </Path.Data>
+            </Path>
+            <Path Fill="Grey" Stroke="Black">
+                <Path.Data>
+                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+                </Path.Data>
+            </Path>
+            <Path Fill="Grey" Stroke="Black">
+                <Path.Data>
+                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+                </Path.Data>
+            </Path>
+            <Path Fill="Grey" Stroke="Black">
+                <Path.Data>
+                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+                </Path.Data>
+            </Path>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

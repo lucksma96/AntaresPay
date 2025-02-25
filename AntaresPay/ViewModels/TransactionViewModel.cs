@@ -1,0 +1,13 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace AntaresPay.ViewModels;
+
+[QueryProperty("Operation", "Operation"), QueryProperty("Value", "Value")]
+public partial class TransactionViewModel : ObservableObject
+{
+    [ObservableProperty]
+    public partial string? Operation { get; set; }
+
+    [ObservableProperty]
+    public partial int Value { get; set; }
+}

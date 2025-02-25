@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿using AntaresPay.ViewModels;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace AntaresPay
@@ -21,6 +22,9 @@ namespace AntaresPay
 
             builder.Services.AddTransient<OperationPage>();
             builder.Services.AddTransient<OperationViewModel>();
+
+            builder.Services.AddTransient<TransactionPage>();
+            builder.Services.AddTransient<TransactionViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();
