@@ -8,11 +8,11 @@ public partial class TransactionPage : ContentPage
 {
     private readonly TransactionViewModel _vm;
     public const string ALERT_TITLE = "NFC";
-    public const string MIME_TYPE = "application/com.companyname.nfcsample";
+    public const string MIME_TYPE = "application/json";
     private NFCNdefTypeFormat _type;
     private bool _isDeviceiOS;
     private bool _eventsAlreadySubscribed;
-    
+
     public TransactionPage(TransactionViewModel vm)
 	{
 		InitializeComponent();
@@ -153,7 +153,7 @@ public partial class TransactionPage : ContentPage
 
         try
         {
-            NFCNdefRecord record = null;
+            NFCNdefRecord? record = null;
             switch (_type)
             {
                 case NFCNdefTypeFormat.WellKnown:
@@ -187,14 +187,9 @@ public partial class TransactionPage : ContentPage
             if (!format && record == null)
                 throw new Exception("Record can't be null.");
 
-            tagInfo.Records = new[] { record };
+            tagInfo.Records = [record];
 
-            if (format)
-                CrossNFC.Current.ClearMessage(tagInfo);
-            else
-            {
-                CrossNFC.Current.PublishMessage(tagInfo, false);
-            }
+            CrossNFC.Current.PublishMessage(tagInfo, false);
         }
         catch (Exception ex)
         {
@@ -261,17 +256,6 @@ public partial class TransactionPage : ContentPage
         try
         {
             _type = NFCNdefTypeFormat.Empty;
-            //if (ChkReadOnly.IsChecked)
-            //{
-            //    if (!await DisplayAlert("Warning", "Make a Tag read-only operation is permanent and can't be undone. Are you sure you wish to continue?", "Yes", "No"))
-            //    {
-            //        ChkReadOnly.IsChecked = false;
-            //        return;
-            //    }
-            //    _makeReadOnly = true;
-            //}
-            //else
-            //    _makeReadOnly = false;
 
             if (type.HasValue) _type = type.Value;
             CrossNFC.Current.StartPublishing(!type.HasValue);
