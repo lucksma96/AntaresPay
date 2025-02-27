@@ -6,28 +6,29 @@
     <VerticalStackLayout>
         <Label 
             Text="Aproxime o cartão"
+            FontSize="24"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
-        <HorizontalStackLayout Padding="30" Spacing="15">
+        <HorizontalStackLayout Padding="0, 30" Spacing="10" HorizontalOptions="Center">
             <Path Fill="Grey" Stroke="Black">
                 <Path.Data>
-                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+                    <EllipseGeometry Center="10,10" RadiusX="10" RadiusY="10" />
                 </Path.Data>
             </Path>
             <Path Fill="Grey" Stroke="Black">
                 <Path.Data>
-                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+                    <EllipseGeometry Center="10,10" RadiusX="10" RadiusY="10" />
                 </Path.Data>
             </Path>
             <Path Fill="Grey" Stroke="Black">
                 <Path.Data>
-                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+                    <EllipseGeometry Center="10,10" RadiusX="10" RadiusY="10" />
                 </Path.Data>
             </Path>
             <Path Fill="Grey" Stroke="Black">
                 <Path.Data>
-                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+                    <EllipseGeometry Center="10,10" RadiusX="10" RadiusY="10" />
                 </Path.Data>
             </Path>
         </HorizontalStackLayout>
