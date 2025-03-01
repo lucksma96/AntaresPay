@@ -30,13 +30,13 @@
 #endif
 
             // Remove any non-numeric characters from the text
-            var newText = new string(args.NewTextValue.Where(char.IsDigit).ToArray());
+            var newText = new string([.. args.NewTextValue.Where(char.IsDigit)]);
 
             // Convert the numeric text to a decimal value
             if (int.TryParse(newText, out var amount) && amount > 0)
             {
                 // Format the decimal amount to the desired currency format
-                string formattedAmount = $"₳ {amount}";
+                string formattedAmount = $"₳ {amount:D}";
 
                 // Set the formatted text to the Entry
                 entry.Text = formattedAmount;

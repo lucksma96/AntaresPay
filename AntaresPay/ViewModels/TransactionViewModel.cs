@@ -10,4 +10,11 @@ public partial class TransactionViewModel : ObservableObject
 
     [ObservableProperty]
     public partial int Value { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsDeviceListening { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsNfcEnabled { get; set; }
+
 }
