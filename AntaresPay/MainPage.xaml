@@ -7,7 +7,6 @@
     <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-
         <Image
                 Source="antares_logo_l.png"
                 BackgroundColor="Transparent"
@@ -16,7 +15,7 @@
                 SemanticProperties.Description="Logo Antares" />
 
         <Label
-                Text="Antares Pay"
+                Text="AntaresPay"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
 
@@ -26,7 +25,7 @@
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Select monetary operation" />
 
-        <VerticalStackLayout Padding="5" Spacing="5">
+        <VerticalStackLayout Spacing="10">
             <Button Text="Pagar" Clicked="OperationButtons_Clicked"></Button>
             <Button Text="Cobrar" Clicked="OperationButtons_Clicked"></Button>
             <Button Text="Extrato" Clicked="BalanceButton_Clicked"></Button>
