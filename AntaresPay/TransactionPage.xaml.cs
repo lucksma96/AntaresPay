@@ -14,7 +14,7 @@ public partial class TransactionPage : ContentPage
     private NFCNdefTypeFormat _type;
     private bool _isDeviceiOS;
     private bool _eventsAlreadySubscribed;
-    private JsonSerializerOptions _serializeOptions = new()
+    private readonly JsonSerializerOptions _serializeOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = false
@@ -34,6 +34,29 @@ public partial class TransactionPage : ContentPage
         return base.OnBackButtonPressed();
     }
 
+    private async void TransactionPage_Loaded(object? sender, EventArgs e)
+    {
+        // In order to support Mifare Classic 1K tags (read/write), legacy mode must be true.
+        CrossNFC.Legacy = true;
+
+        if (CrossNFC.IsSupported)
+        {
+            if (!CrossNFC.Current.IsAvailable)
+                await ShowAlert("NFC is not available");
+
+            _vm.IsNfcEnabled = CrossNFC.Current.IsEnabled;
+            if (!_vm.IsNfcEnabled)
+                await ShowAlert("NFC is disabled");
+
+            if (DeviceInfo.Platform == DevicePlatform.iOS)
+                _isDeviceiOS = true;
+
+            SubscribeEvents();
+
+            await Publish(NFCNdefTypeFormat.Mime);
+        }
+    }
+
     /// <summary>
     /// Subscribe to the NFC events
     /// </summary>
@@ -44,7 +67,6 @@ public partial class TransactionPage : ContentPage
 
         _eventsAlreadySubscribed = true;
 
-        CrossNFC.Current.OnMessageReceived += Current_OnMessageReceived;
         CrossNFC.Current.OnMessagePublished += Current_OnMessagePublished;
         CrossNFC.Current.OnTagDiscovered += Current_OnTagDiscovered;
         CrossNFC.Current.OnNfcStatusChanged += Current_OnNfcStatusChanged;
@@ -59,7 +81,6 @@ public partial class TransactionPage : ContentPage
     /// </summary>
     void UnsubscribeEvents()
     {
-        CrossNFC.Current.OnMessageReceived -= Current_OnMessageReceived;
         CrossNFC.Current.OnMessagePublished -= Current_OnMessagePublished;
         CrossNFC.Current.OnTagDiscovered -= Current_OnTagDiscovered;
         CrossNFC.Current.OnNfcStatusChanged -= Current_OnNfcStatusChanged;
@@ -83,42 +104,6 @@ public partial class TransactionPage : ContentPage
     {
         _vm.IsNfcEnabled = isEnabled;
         await ShowAlert($"NFC has been {(isEnabled ? "enabled" : "disabled")}");
-    }
-
-    /// <summary>
-    /// Event raised when a NDEF message is received
-    /// </summary>
-    /// <param name="tagInfo">Received <see cref="ITagInfo"/></param>
-    async void Current_OnMessageReceived(ITagInfo tagInfo)
-    {
-        if (tagInfo == null)
-        {
-            await ShowAlert("No tag found");
-            return;
-        }
-
-        // Customized serial number
-        var identifier = tagInfo.Identifier;
-        var serialNumber = NFCUtils.ByteArrayToHexString(identifier, ":");
-        var title = !string.IsNullOrWhiteSpace(serialNumber) ? $"Tag [{serialNumber}]" : "Tag Info";
-
-        if (!tagInfo.IsSupported)
-        {
-            await ShowAlert("Unsupported tag (app)", title);
-        }
-        else if (tagInfo.IsEmpty)
-        {
-            await ShowAlert("Empty tag", title);
-        }
-        else
-        {
-            var first = tagInfo.Records[0];
-            //await ShowAlert(GetMessage(first), title);
-            var unitData = GetUnitData(first);
-            CommitTransaction(unitData, _vm.Operation, _vm.Value);
-            _vm.UnitData = unitData;
-            await Publish(NFCNdefTypeFormat.Mime);
-        }
     }
 
     /// <summary>
@@ -160,6 +145,15 @@ public partial class TransactionPage : ContentPage
 
         try
         {
+            var identifier = tagInfo.Identifier;
+            var serialNumber = NFCUtils.ByteArrayToHexString(identifier, ":");
+            var title = !string.IsNullOrWhiteSpace(serialNumber) ? $"Tag [{serialNumber}]" : "Tag Info";
+            var first = tagInfo.Records[0];
+
+            var unitData = GetUnitData(first);
+            CommitTransaction(unitData, _vm.Operation, _vm.Value);
+            _vm.UnitData = unitData;
+
             if (_vm.UnitData is null)
                 throw new ArgumentNullException();
 
@@ -182,54 +176,6 @@ public partial class TransactionPage : ContentPage
         }
     }
 
-    private async void TransactionPage_Loaded(object? sender, EventArgs e)
-    {
-        // In order to support Mifare Classic 1K tags (read/write), you must set legacy mode to true.
-        CrossNFC.Legacy = true;
-
-        if (CrossNFC.IsSupported)
-        {
-            if (!CrossNFC.Current.IsAvailable)
-                await ShowAlert("NFC is not available");
-
-            _vm.IsNfcEnabled = CrossNFC.Current.IsEnabled;
-            if (!_vm.IsNfcEnabled)
-                await ShowAlert("NFC is disabled");
-
-            if (DeviceInfo.Platform == DevicePlatform.iOS)
-                _isDeviceiOS = true;
-
-            //// Custom NFC configuration (ex. UI messages in French)
-            //CrossNFC.Current.SetConfiguration(new NfcConfiguration
-            //{
-            //	DefaultLanguageCode = "fr",
-            //	Messages = new UserDefinedMessages
-            //	{
-            //		NFCSessionInvalidated = "Session invalidée",
-            //		NFCSessionInvalidatedButton = "OK",
-            //		NFCWritingNotSupported = "L'écriture des TAGs NFC n'est pas supporté sur cet appareil",
-            //		NFCDialogAlertMessage = "Approchez votre appareil du tag NFC",
-            //		NFCErrorRead = "Erreur de lecture. Veuillez rééssayer",
-            //		NFCErrorEmptyTag = "Ce tag est vide",
-            //		NFCErrorReadOnlyTag = "Ce tag n'est pas accessible en écriture",
-            //		NFCErrorCapacityTag = "La capacité de ce TAG est trop basse",
-            //		NFCErrorMissingTag = "Aucun tag trouvé",
-            //		NFCErrorMissingTagInfo = "Aucune information à écrire sur le tag",
-            //		NFCErrorNotSupportedTag = "Ce tag n'est pas supporté",
-            //		NFCErrorNotCompliantTag = "Ce tag n'est pas compatible NDEF",
-            //		NFCErrorWrite = "Aucune information à écrire sur le tag",
-            //		NFCSuccessRead = "Lecture réussie",
-            //		NFCSuccessWrite = "Ecriture réussie",
-            //		NFCSuccessClear = "Effaçage réussi"
-            //	}
-            //});
-
-            SubscribeEvents();
-
-            await StartListeningIfNotiOS();
-        }
-    }
-
     /// <summary>
     /// Task to publish data to the tag
     /// </summary>
@@ -237,6 +183,7 @@ public partial class TransactionPage : ContentPage
     /// <returns>The task to be performed</returns>
     async Task Publish(NFCNdefTypeFormat? type = null)
     {
+        await StartListeningIfNotiOS();
         try
         {
             _type = NFCNdefTypeFormat.Empty;
@@ -248,28 +195,6 @@ public partial class TransactionPage : ContentPage
         {
             await ShowAlert(ex.Message);
         }
-    }
-
-    /// <summary>
-    /// Returns the tag information from NDEF record
-    /// </summary>
-    /// <param name="record"><see cref="NFCNdefRecord"/></param>
-    /// <returns>The tag information</returns>
-    string GetMessage(NFCNdefRecord record)
-    {
-        var message = $"Message: {record.Message}";
-        message += Environment.NewLine;
-        message += $"RawMessage: {Encoding.UTF8.GetString(record.Payload)}";
-        message += Environment.NewLine;
-        message += $"Type: {record.TypeFormat}";
-
-        if (!string.IsNullOrWhiteSpace(record.MimeType))
-        {
-            message += Environment.NewLine;
-            message += $"MimeType: {record.MimeType}";
-        }
-
-        return message;
     }
 
     UnitData GetUnitData(NFCNdefRecord record)
