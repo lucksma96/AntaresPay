@@ -29,7 +29,7 @@
         <VerticalStackLayout Padding="5" Spacing="5">
             <Button Text="Pagar" Clicked="OperationButtons_Clicked"></Button>
             <Button Text="Cobrar" Clicked="OperationButtons_Clicked"></Button>
-            <Button Text="Extrato" Clicked="OperationButtons_Clicked"></Button>
+            <Button Text="Extrato" Clicked="BalanceButton_Clicked"></Button>
             <Button Text="Registrar" Clicked="RegisterButton_Clicked"></Button>
         </VerticalStackLayout>
     </VerticalStackLayout>

@@ -26,6 +26,9 @@ namespace AntaresPay
             builder.Services.AddTransient<TransactionPage>();
             builder.Services.AddTransient<TransactionViewModel>();
 
+            builder.Services.AddTransient<BalancePage>();
+            builder.Services.AddTransient<BalanceViewModel>();
+
             builder.Services.AddTransient<RegisterPage>();
             builder.Services.AddTransient<RegisterViewModel>();
 

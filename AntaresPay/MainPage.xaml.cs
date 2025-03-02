@@ -15,6 +15,11 @@ namespace AntaresPay
             await Shell.Current.GoToAsync($"{nameof(OperationPage)}?Operation={operation}");
         }
 
+        async void BalanceButton_Clicked(object sender, EventArgs args)
+        {
+            await Shell.Current.GoToAsync(nameof(BalancePage));
+        }
+
         async void RegisterButton_Clicked(object sender, EventArgs args)
         {
             await Shell.Current.GoToAsync(nameof(RegisterPage));
