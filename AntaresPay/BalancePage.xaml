@@ -5,17 +5,16 @@
              xmlns:viewmodel="clr-namespace:AntaresPay.ViewModels"
              x:DataType="viewmodel:BalanceViewModel"
              Title="Extrato">
-    <VerticalStackLayout Padding="10" Spacing="10">
-        <Label 
-            Text="{Binding UnitData.Name}"
-            FontSize="32"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Label 
-            Text="{Binding UnitData.Balance, StringFormat='₳ {0:D}'}"
-            FontSize="28"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button Text="OK" FontSize="24"></Button>
+    <VerticalStackLayout Padding="30" Spacing="10">
+        <HorizontalStackLayout>
+            <Label Text="Unidade: " FontSize="32"></Label>
+            <Label Text="{Binding UnitData.Name}" FontSize="32" VerticalOptions="Center" HorizontalOptions="Start" />
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Label Text="Saldo: " FontSize="28"></Label>
+            <Label Text="{Binding UnitData.Balance, StringFormat='₳{0:D}'}" FontSize="28" VerticalOptions="Center" HorizontalOptions="Start" />
+        </HorizontalStackLayout>
+        <Label Text="Aproxime o cartão" FontSize="16" HorizontalOptions="Center"></Label>
+        <Button Text="Voltar" FontSize="24" Command="{Binding ReturnCommand}"></Button>
     </VerticalStackLayout>
 </ContentPage>
