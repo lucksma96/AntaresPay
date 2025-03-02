@@ -1,6 +1,8 @@
+using AntaresPay.Models;
 using AntaresPay.ViewModels;
 using Plugin.NFC;
 using System.Text;
+using System.Text.Json;
 
 namespace AntaresPay;
 
@@ -12,11 +14,16 @@ public partial class TransactionPage : ContentPage
     private NFCNdefTypeFormat _type;
     private bool _isDeviceiOS;
     private bool _eventsAlreadySubscribed;
+    private JsonSerializerOptions _serializeOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = false
+    };
 
     public TransactionPage(TransactionViewModel vm)
-	{
-		InitializeComponent();
-		BindingContext = _vm = vm;
+    {
+        InitializeComponent();
+        BindingContext = _vm = vm;
         Loaded += TransactionPage_Loaded;
     }
 
@@ -106,7 +113,11 @@ public partial class TransactionPage : ContentPage
         else
         {
             var first = tagInfo.Records[0];
-            await ShowAlert(GetMessage(first), title);
+            //await ShowAlert(GetMessage(first), title);
+            var unitData = GetUnitData(first);
+            CommitTransaction(unitData, _vm.Operation, _vm.Value);
+            _vm.UnitData = unitData;
+            await Publish(NFCNdefTypeFormat.Mime);
         }
     }
 
@@ -125,12 +136,8 @@ public partial class TransactionPage : ContentPage
     {
         try
         {
-            //ChkReadOnly.IsChecked = false;
             CrossNFC.Current.StopPublishing();
-            if (tagInfo.IsEmpty)
-                await ShowAlert("Formatting tag operation successful");
-            else
-                await ShowAlert("Writing tag operation successful");
+            await ShowAlert("Writing tag operation successful");
         }
         catch (Exception ex)
         {
@@ -153,39 +160,17 @@ public partial class TransactionPage : ContentPage
 
         try
         {
-            NFCNdefRecord? record = null;
-            switch (_type)
-            {
-                case NFCNdefTypeFormat.WellKnown:
-                    record = new NFCNdefRecord
-                    {
-                        TypeFormat = NFCNdefTypeFormat.WellKnown,
-                        MimeType = MIME_TYPE,
-                        Payload = NFCUtils.EncodeToByteArray("Plugin.NFC is awesome!"),
-                        LanguageCode = "en"
-                    };
-                    break;
-                case NFCNdefTypeFormat.Uri:
-                    record = new NFCNdefRecord
-                    {
-                        TypeFormat = NFCNdefTypeFormat.Uri,
-                        Payload = NFCUtils.EncodeToByteArray("https://github.com/franckbour/Plugin.NFC")
-                    };
-                    break;
-                case NFCNdefTypeFormat.Mime:
-                    record = new NFCNdefRecord
-                    {
-                        TypeFormat = NFCNdefTypeFormat.Mime,
-                        MimeType = MIME_TYPE,
-                        Payload = NFCUtils.EncodeToByteArray("Plugin.NFC is awesome!")
-                    };
-                    break;
-                default:
-                    break;
-            }
+            if (_vm.UnitData is null)
+                throw new ArgumentNullException();
 
-            if (!format && record == null)
-                throw new Exception("Record can't be null.");
+            var payload = JsonSerializer.Serialize<UnitData>(_vm.UnitData, _serializeOptions);
+
+            var record = new NFCNdefRecord
+            {
+                TypeFormat = NFCNdefTypeFormat.Mime,
+                MimeType = MIME_TYPE,
+                Payload = NFCUtils.EncodeToByteArray(payload)
+            };
 
             tagInfo.Records = [record];
 
@@ -252,7 +237,6 @@ public partial class TransactionPage : ContentPage
     /// <returns>The task to be performed</returns>
     async Task Publish(NFCNdefTypeFormat? type = null)
     {
-        await StartListeningIfNotiOS();
         try
         {
             _type = NFCNdefTypeFormat.Empty;
@@ -286,6 +270,15 @@ public partial class TransactionPage : ContentPage
         }
 
         return message;
+    }
+
+    UnitData GetUnitData(NFCNdefRecord record)
+    {
+        var data = JsonSerializer.Deserialize<UnitData>(record.Message, _serializeOptions);
+        if (data is null || !data.IsValidUnit())
+            throw new KeyNotFoundException();
+
+        return data;
     }
 
     /// <summary>
@@ -342,6 +335,21 @@ public partial class TransactionPage : ContentPage
         catch (Exception ex)
         {
             await ShowAlert(ex.Message);
+        }
+    }
+
+    private void CommitTransaction(UnitData unitData, string? operation, int value)
+    {
+        switch (operation)
+        {
+            case "Pagar":
+                unitData.Balance += value;
+                break;
+            case "Cobrar":
+                unitData.Balance -= value;
+                break;
+            default:
+                break;
         }
     }
 }

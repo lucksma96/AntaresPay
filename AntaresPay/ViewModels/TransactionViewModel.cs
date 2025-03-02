@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AntaresPay.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AntaresPay.ViewModels;
 
@@ -17,4 +18,5 @@ public partial class TransactionViewModel : ObservableObject
     [ObservableProperty]
     public partial bool IsNfcEnabled { get; set; }
 
+    public UnitData? UnitData { get; set; }
 }
