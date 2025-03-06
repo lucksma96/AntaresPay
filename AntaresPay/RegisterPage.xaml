@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AntaresPay.RegisterPage"
              xmlns:viewmodel="clr-namespace:AntaresPay.ViewModels"
              x:DataType="viewmodel:RegisterViewModel"
-             Title="Register">
-    <VerticalStackLayout>
+             Title="Registrar">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
         <Label 
-            Text="Selecione a unidade"
+            Text="Selecione a unidade" FontSize="28"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-
-        <Picker Title="Unidade" ItemsSource="{Binding Units}" ItemDisplayBinding="{Binding Name}"></Picker>
-        <Button Text="Confirmar"></Button>
+        <Picker 
+            Title="Unidade" 
+            ItemsSource="{Binding Units}" 
+            ItemDisplayBinding="{Binding Name}" 
+            FontSize="28" 
+            SelectedItem="{Binding UnitData}" 
+            IsEnabled="{Binding IsDevicePublishing, Converter={StaticResource InvertedBoolConverter}}"></Picker>
+        <Button Text="Confirmar" Clicked="Confirm_Clicked" IsVisible="{Binding IsDevicePublishing, Converter={StaticResource InvertedBoolConverter}}"></Button>
+        <VerticalStackLayout Spacing="25" IsVisible="{Binding IsDevicePublishing}">
+            <ActivityIndicator IsRunning="{Binding IsDevicePublishing}"></ActivityIndicator>
+            <Button Text="Cancelar" Clicked="Cancel_Clicked"></Button>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

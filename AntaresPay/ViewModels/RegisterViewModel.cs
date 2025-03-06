@@ -5,9 +5,6 @@ namespace AntaresPay.ViewModels;
 
 public partial class RegisterViewModel : ObservableObject
 {
-    [ObservableProperty]
-    public partial List<UnitData> Units { get; set; }
-
     public RegisterViewModel()
     {
         Units = [
@@ -25,4 +22,13 @@ public partial class RegisterViewModel : ObservableObject
             new UnitData() { Id = "pegasus", Name = "Pégasus" },
         ];
     }
+
+    [ObservableProperty]
+    public partial List<UnitData> Units { get; set; }
+
+    [ObservableProperty]
+    public partial UnitData UnitData { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsDevicePublishing { get; set; }
 }
