@@ -11,7 +11,6 @@ public partial class TransactionPage : ContentPage
     private readonly TransactionViewModel _vm;
     public const string ALERT_TITLE = "NFC";
     public const string MIME_TYPE = "application/json";
-    private NFCNdefTypeFormat _type;
     private bool _isDeviceiOS;
     private bool _eventsAlreadySubscribed;
     private readonly JsonSerializerOptions _serializeOptions = new()
@@ -53,7 +52,7 @@ public partial class TransactionPage : ContentPage
 
             SubscribeEvents();
 
-            await Publish(NFCNdefTypeFormat.Mime);
+            await Publish();
         }
     }
 
@@ -147,7 +146,6 @@ public partial class TransactionPage : ContentPage
         {
             var identifier = tagInfo.Identifier;
             var serialNumber = NFCUtils.ByteArrayToHexString(identifier, ":");
-            var title = !string.IsNullOrWhiteSpace(serialNumber) ? $"Tag [{serialNumber}]" : "Tag Info";
             var first = tagInfo.Records[0];
 
             var unitData = GetUnitData(first);
@@ -181,15 +179,12 @@ public partial class TransactionPage : ContentPage
     /// </summary>
     /// <param name="type"><see cref="NFCNdefTypeFormat"/></param>
     /// <returns>The task to be performed</returns>
-    async Task Publish(NFCNdefTypeFormat? type = null)
+    async Task Publish()
     {
         await StartListeningIfNotiOS();
         try
         {
-            _type = NFCNdefTypeFormat.Empty;
-
-            if (type.HasValue) _type = type.Value;
-            CrossNFC.Current.StartPublishing(!type.HasValue);
+            CrossNFC.Current.StartPublishing();
         }
         catch (Exception ex)
         {
