@@ -41,11 +41,11 @@ public partial class TransactionPage : ContentPage
         if (CrossNFC.IsSupported)
         {
             if (!CrossNFC.Current.IsAvailable)
-                await ShowAlert("NFC is not available");
+                await ShowAlert("NFC não está disponível"); // TODO: (message) NFC is not available
 
             _vm.IsNfcEnabled = CrossNFC.Current.IsEnabled;
             if (!_vm.IsNfcEnabled)
-                await ShowAlert("NFC is disabled");
+                await ShowAlert("NFC está desabilitado"); // TODO: (message) NFC is disabled
 
             if (DeviceInfo.Platform == DevicePlatform.iOS)
                 _isDeviceiOS = true;
@@ -68,7 +68,6 @@ public partial class TransactionPage : ContentPage
 
         CrossNFC.Current.OnMessagePublished += Current_OnMessagePublished;
         CrossNFC.Current.OnTagDiscovered += Current_OnTagDiscovered;
-        CrossNFC.Current.OnNfcStatusChanged += Current_OnNfcStatusChanged;
         CrossNFC.Current.OnTagListeningStatusChanged += Current_OnTagListeningStatusChanged;
 
         if (_isDeviceiOS)
@@ -82,7 +81,6 @@ public partial class TransactionPage : ContentPage
     {
         CrossNFC.Current.OnMessagePublished -= Current_OnMessagePublished;
         CrossNFC.Current.OnTagDiscovered -= Current_OnTagDiscovered;
-        CrossNFC.Current.OnNfcStatusChanged -= Current_OnNfcStatusChanged;
         CrossNFC.Current.OnTagListeningStatusChanged -= Current_OnTagListeningStatusChanged;
 
         if (_isDeviceiOS)
@@ -94,16 +92,6 @@ public partial class TransactionPage : ContentPage
     /// </summary>
     /// <param name="isListening"></param>
     void Current_OnTagListeningStatusChanged(bool isListening) => _vm.IsDeviceListening = isListening;
-
-    /// <summary>
-    /// Event raised when NFC Status has changed
-    /// </summary>
-    /// <param name="isEnabled">NFC status</param>
-    async void Current_OnNfcStatusChanged(bool isEnabled)
-    {
-        _vm.IsNfcEnabled = isEnabled;
-        await ShowAlert($"NFC has been {(isEnabled ? "enabled" : "disabled")}");
-    }
 
     /// <summary>
     /// Event raised when user cancelled NFC session on iOS 
@@ -121,7 +109,7 @@ public partial class TransactionPage : ContentPage
         try
         {
             CrossNFC.Current.StopPublishing();
-            await ShowAlert("Writing tag operation successful");
+            await ShowAlert("Sucesso!"); // TODO: (message) Writing tag operation successful
         }
         catch (Exception ex)
         {
@@ -138,7 +126,7 @@ public partial class TransactionPage : ContentPage
     {
         if (!CrossNFC.Current.IsWritingTagSupported)
         {
-            await ShowAlert("Writing tag is not supported on this device");
+            await ShowAlert("Este dispositivo não permite esta operação"); // TODO: (message) Writing tag is not supported on this device
             return;
         }
 
@@ -213,7 +201,7 @@ public partial class TransactionPage : ContentPage
     /// <param name="message">Message to be displayed</param>
     /// <param name="title">Alert title</param>
     /// <returns>The task to be performed</returns>
-    Task ShowAlert(string message, string? title = null) => DisplayAlert(string.IsNullOrWhiteSpace(title) ? ALERT_TITLE : title, message, "Cancel");
+    Task ShowAlert(string message, string? title = null) => DisplayAlert(string.IsNullOrWhiteSpace(title) ? ALERT_TITLE : title, message, "Cancelar");
 
     /// <summary>
     /// Task to start listening for NFC tags if the user's device platform is not iOS
