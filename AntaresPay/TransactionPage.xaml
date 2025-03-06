@@ -17,7 +17,10 @@
             VerticalOptions="Center"
             HorizontalOptions="Center" />
 
-        <HorizontalStackLayout Padding="0, 30" Spacing="10" HorizontalOptions="Center">
+        <ActivityIndicator IsRunning="{Binding IsDeviceListening}"></ActivityIndicator>
+        <Button Text="Cancelar" Command="{Binding ReturnCommand}"></Button>
+
+        <!--<HorizontalStackLayout Padding="0, 30" Spacing="10" HorizontalOptions="Center">
             <Path Fill="Grey" Stroke="Black">
                 <Path.Data>
                     <EllipseGeometry Center="10,10" RadiusX="10" RadiusY="10" />
@@ -38,6 +41,6 @@
                     <EllipseGeometry Center="10,10" RadiusX="10" RadiusY="10" />
                 </Path.Data>
             </Path>
-        </HorizontalStackLayout>
+        </HorizontalStackLayout>-->
     </VerticalStackLayout>
 </ContentPage>
