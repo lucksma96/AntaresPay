@@ -104,7 +104,7 @@ public partial class RegisterPage : ContentPage
 
             tagInfo.Records = [record];
 
-            CrossNFC.Current.ClearMessage(tagInfo);
+            CrossNFC.Current.PublishMessage(tagInfo);
         }
         catch (Exception ex)
         {
@@ -116,7 +116,6 @@ public partial class RegisterPage : ContentPage
     {
         try
         {
-            CrossNFC.Current.StopListening();
             CrossNFC.Current.StopPublishing();
             _vm.IsDevicePublishing = false;
             await ShowAlert("Writing tag operation successful");
