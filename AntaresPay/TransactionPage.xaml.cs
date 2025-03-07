@@ -1,7 +1,6 @@
 using AntaresPay.Models;
 using AntaresPay.ViewModels;
 using Plugin.NFC;
-using System.Text;
 using System.Text.Json;
 
 namespace AntaresPay;
@@ -89,8 +88,9 @@ public partial class TransactionPage : ContentPage
     {
         try
         {
-            CrossNFC.Current.StopPublishing();
+            UnsubscribeEvents();
             await ShowAlert("Sucesso!"); // TODO: (message) Writing tag operation successful
+            await _vm.GoHomeCommand.ExecuteAsync(null);
         }
         catch (Exception ex)
         {
@@ -176,18 +176,6 @@ public partial class TransactionPage : ContentPage
         try
         {
             CrossNFC.Current.StartListening();
-        }
-        catch (Exception ex)
-        {
-            await ShowAlert(ex.Message);
-        }
-    }
-
-    async Task StopListening()
-    {
-        try
-        {
-            CrossNFC.Current.StopListening();
         }
         catch (Exception ex)
         {

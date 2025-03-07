@@ -23,4 +23,7 @@ public partial class TransactionViewModel : ObservableObject
 
     [RelayCommand]
     private static async Task Return() => await Shell.Current.GoToAsync("..");
+
+    [RelayCommand]
+    private static async Task GoHome() => await Shell.Current.Navigation.PopToRootAsync();
 }
