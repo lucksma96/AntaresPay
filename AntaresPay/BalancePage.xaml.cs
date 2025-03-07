@@ -18,11 +18,11 @@ public partial class BalancePage : ContentPage
     private bool _isDeviceiOS;
 
     public BalancePage(BalanceViewModel vm)
-	{
-		InitializeComponent();
-		BindingContext = _vm = vm;
+    {
+        InitializeComponent();
+        BindingContext = _vm = vm;
         Loaded += BalancePage_Loaded;
-	}
+    }
 
     protected override bool OnBackButtonPressed()
     {
@@ -49,11 +49,11 @@ public partial class BalancePage : ContentPage
         if (CrossNFC.IsSupported)
         {
             if (!CrossNFC.Current.IsAvailable)
-                await ShowAlert("NFC is not available");
+                await ShowAlert("NFC não está disponível"); // TODO: (message) NFC is not available
 
             _vm.IsNfcEnabled = CrossNFC.Current.IsEnabled;
             if (!_vm.IsNfcEnabled)
-                await ShowAlert("NFC is disabled");
+                await ShowAlert("NFC está desabilitada"); // TODO: (message) NFC is disabled
 
             if (DeviceInfo.Platform == DevicePlatform.iOS)
                 _isDeviceiOS = true;
@@ -67,29 +67,16 @@ public partial class BalancePage : ContentPage
     {
         if (tagInfo == null)
         {
-            await ShowAlert("No tag found");
+            await ShowAlert("Cartão não detectado"); // TODO: (message) No tag found
             return;
         }
 
         // Customized serial number
         var identifier = tagInfo.Identifier;
         var serialNumber = NFCUtils.ByteArrayToHexString(identifier, ":");
-        var title = !string.IsNullOrWhiteSpace(serialNumber) ? $"Tag [{serialNumber}]" : "Tag Info";
 
-        if (!tagInfo.IsSupported)
-        {
-            await ShowAlert("Unsupported tag (app)", title);
-        }
-        else if (tagInfo.IsEmpty)
-        {
-            await ShowAlert("Empty tag", title);
-        }
-        else
-        {
-            var first = tagInfo.Records[0];
-
-            _vm.UnitData = GetUnitData(first);
-        }
+        var first = tagInfo.Records[0];
+        _vm.UnitData = GetUnitData(first);
     }
 
     async Task StartListeningIfNotiOS()

@@ -45,7 +45,7 @@ public partial class TransactionPage : ContentPage
 
             _vm.IsNfcEnabled = CrossNFC.Current.IsEnabled;
             if (!_vm.IsNfcEnabled)
-                await ShowAlert("NFC está desabilitado"); // TODO: (message) NFC is disabled
+                await ShowAlert("NFC está desabilitada"); // TODO: (message) NFC is disabled
 
             if (DeviceInfo.Platform == DevicePlatform.iOS)
                 _isDeviceiOS = true;
@@ -56,9 +56,6 @@ public partial class TransactionPage : ContentPage
         }
     }
 
-    /// <summary>
-    /// Subscribe to the NFC events
-    /// </summary>
     void SubscribeEvents()
     {
         if (_eventsAlreadySubscribed)
@@ -74,9 +71,6 @@ public partial class TransactionPage : ContentPage
             CrossNFC.Current.OniOSReadingSessionCancelled += Current_OniOSReadingSessionCancelled;
     }
 
-    /// <summary>
-    /// Unsubscribe from the NFC events
-    /// </summary>
     void UnsubscribeEvents()
     {
         CrossNFC.Current.OnMessagePublished -= Current_OnMessagePublished;
@@ -87,23 +81,10 @@ public partial class TransactionPage : ContentPage
             CrossNFC.Current.OniOSReadingSessionCancelled -= Current_OniOSReadingSessionCancelled;
     }
 
-    /// <summary>
-    /// Event raised when Listener Status has changed
-    /// </summary>
-    /// <param name="isListening"></param>
     void Current_OnTagListeningStatusChanged(bool isListening) => _vm.IsDeviceListening = isListening;
 
-    /// <summary>
-    /// Event raised when user cancelled NFC session on iOS 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     void Current_OniOSReadingSessionCancelled(object? sender, EventArgs e) => Debug("iOS NFC Session has been cancelled");
 
-    /// <summary>
-    /// Event raised when data has been published on the tag
-    /// </summary>
-    /// <param name="tagInfo">Published <see cref="ITagInfo"/></param>
     async void Current_OnMessagePublished(ITagInfo tagInfo)
     {
         try
@@ -117,11 +98,6 @@ public partial class TransactionPage : ContentPage
         }
     }
 
-    /// <summary>
-    /// Event raised when a NFC Tag is discovered
-    /// </summary>
-    /// <param name="tagInfo"><see cref="ITagInfo"/> to be published</param>
-    /// <param name="format">Format the tag</param>
     async void Current_OnTagDiscovered(ITagInfo tagInfo, bool format)
     {
         if (!CrossNFC.Current.IsWritingTagSupported)
@@ -154,7 +130,7 @@ public partial class TransactionPage : ContentPage
 
             tagInfo.Records = [record];
 
-            CrossNFC.Current.PublishMessage(tagInfo, false);
+            CrossNFC.Current.PublishMessage(tagInfo);
         }
         catch (Exception ex)
         {
@@ -162,11 +138,6 @@ public partial class TransactionPage : ContentPage
         }
     }
 
-    /// <summary>
-    /// Task to publish data to the tag
-    /// </summary>
-    /// <param name="type"><see cref="NFCNdefTypeFormat"/></param>
-    /// <returns>The task to be performed</returns>
     async Task Publish()
     {
         await StartListeningIfNotiOS();
@@ -189,24 +160,10 @@ public partial class TransactionPage : ContentPage
         return data;
     }
 
-    /// <summary>
-    /// Write a debug message in the debug console
-    /// </summary>
-    /// <param name="message">The message to be displayed</param>
     void Debug(string message) => System.Diagnostics.Debug.WriteLine(message);
 
-    /// <summary>
-    /// Display an alert
-    /// </summary>
-    /// <param name="message">Message to be displayed</param>
-    /// <param name="title">Alert title</param>
-    /// <returns>The task to be performed</returns>
-    Task ShowAlert(string message, string? title = null) => DisplayAlert(string.IsNullOrWhiteSpace(title) ? ALERT_TITLE : title, message, "Cancelar");
+    Task ShowAlert(string message, string? title = null) => DisplayAlert(string.IsNullOrWhiteSpace(title) ? ALERT_TITLE : title, message, "OK");
 
-    /// <summary>
-    /// Task to start listening for NFC tags if the user's device platform is not iOS
-    /// </summary>
-    /// <returns>The task to be performed</returns>
     async Task StartListeningIfNotiOS()
     {
         if (_isDeviceiOS)
@@ -214,10 +171,6 @@ public partial class TransactionPage : ContentPage
         await BeginListening();
     }
 
-    /// <summary>
-    /// Task to safely start listening for NFC Tags
-    /// </summary>
-    /// <returns>The task to be performed</returns>
     async Task BeginListening()
     {
         try
@@ -230,10 +183,6 @@ public partial class TransactionPage : ContentPage
         }
     }
 
-    /// <summary>
-    /// Task to safely stop listening for NFC tags
-    /// </summary>
-    /// <returns>The task to be performed</returns>
     async Task StopListening()
     {
         try

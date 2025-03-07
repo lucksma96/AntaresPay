@@ -31,4 +31,7 @@ public partial class RegisterViewModel : ObservableObject
 
     [ObservableProperty]
     public partial bool IsDevicePublishing { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsNfcEnabled { get; set; }
 }

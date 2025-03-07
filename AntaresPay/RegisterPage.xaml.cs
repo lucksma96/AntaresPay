@@ -39,15 +39,15 @@ public partial class RegisterPage : ContentPage
 
         if (CrossNFC.IsSupported)
         {
-            //if (!CrossNFC.Current.IsAvailable)
-            //    await ShowAlert("NFC is not available");
+            if (!CrossNFC.Current.IsAvailable)
+                await ShowAlert("NFC não está disponível"); // TODO: (message) NFC is not available
 
-            //_vm.IsNfcEnabled = CrossNFC.Current.IsEnabled;
-            //if (!_vm.IsNfcEnabled)
-            //    await ShowAlert("NFC is disabled");
+            _vm.IsNfcEnabled = CrossNFC.Current.IsEnabled;
+            if (!_vm.IsNfcEnabled)
+                await ShowAlert("NFC está desabilitada"); // TODO: (message) NFC is disabled
 
-            //if (DeviceInfo.Platform == DevicePlatform.iOS)
-            //    _isDeviceiOS = true;
+            if (DeviceInfo.Platform == DevicePlatform.iOS)
+                _isDeviceiOS = true;
 
             try
             {
@@ -84,7 +84,7 @@ public partial class RegisterPage : ContentPage
     {
         if (!CrossNFC.Current.IsWritingTagSupported)
         {
-            await ShowAlert("Writing tag is not supported on this device");
+            await ShowAlert("Este dispositivo não permite esta operação"); // TODO: (message) Writing tag is not supported on this device
             return;
         }
 
@@ -118,7 +118,7 @@ public partial class RegisterPage : ContentPage
         {
             CrossNFC.Current.StopPublishing();
             _vm.IsDevicePublishing = false;
-            await ShowAlert("Writing tag operation successful");
+            await ShowAlert("Gravação concluída");
         }
         catch (Exception ex)
         {
@@ -159,5 +159,5 @@ public partial class RegisterPage : ContentPage
         }
     }
 
-    Task ShowAlert(string message, string? title = null) => DisplayAlert(string.IsNullOrWhiteSpace(title) ? ALERT_TITLE : title, message, "Cancel");
+    Task ShowAlert(string message, string? title = null) => DisplayAlert(string.IsNullOrWhiteSpace(title) ? ALERT_TITLE : title, message, "OK");
 }
