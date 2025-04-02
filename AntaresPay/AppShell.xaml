@@ -8,8 +8,12 @@
     Title="AntaresPay">
 
     <ShellContent
-        Title="Home"
+        Title="Início"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+    <ShellContent
+        Title="Configurações"
+        ContentTemplate="{DataTemplate local:ConfigPage}"
+        Route="ConfigPage" />
 
 </Shell>
