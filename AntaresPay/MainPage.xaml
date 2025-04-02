@@ -8,9 +8,9 @@
             Padding="30,0"
             Spacing="25">
         <Image
-                Source="antares_logo_l.png"
+                Source="logo.png"
                 BackgroundColor="Transparent"
-                HeightRequest="185"
+                HeightRequest="200"
                 Aspect="AspectFit"
                 SemanticProperties.Description="Logo Antares" />
 
