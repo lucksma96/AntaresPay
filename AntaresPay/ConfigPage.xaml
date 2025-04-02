@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AntaresPay.ConfigPage"
+             xmlns:viewmodel="clr-namespace:AntaresPay.ViewModels"
+             x:DataType="viewmodel:ConfigViewModel"
+             Title="Configurações">
+    <Grid
+        Padding="20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label 
+            Text="Tema"
+            VerticalTextAlignment="Center"/>
+        <Picker
+            Title="Selecione"
+            Grid.Column="1"
+            SelectedItem="{Binding Theme}">
+            <Picker.Items>
+                <x:String>Claro</x:String>
+                <x:String>Escuro</x:String>
+                <x:String>Sistema</x:String>
+            </Picker.Items>
+        </Picker>
+    </Grid>
+</ContentPage>
