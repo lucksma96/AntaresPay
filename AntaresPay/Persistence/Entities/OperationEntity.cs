@@ -3,10 +3,12 @@ using SQLite;
 
 namespace AntaresPay.Persistence.Entities;
 
-public class Operation : BaseEntity
+[Table("Operations")]
+public class OperationEntity : BaseEntity
 {
     public OperationTypeEnum Type { get; set; }
 
     [MaxLength(20)]
-    public required string UnitName { get; set; }
+    public string? UnitName { get; set; }
+    public int Value { get; set; }
 }
