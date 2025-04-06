@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using AntaresPay.Persistence.Entities;
+using SQLite;
 
 namespace AntaresPay.Persistence
 {
@@ -10,7 +11,7 @@ namespace AntaresPay.Persistence
         {
             var path = Path.Combine(FileSystem.AppDataDirectory, "database.db");
             Connection = new SQLiteConnection(path);
-            // TODO - create tables
+            Connection.CreateTable<Operation>();
         }
     }
 }
