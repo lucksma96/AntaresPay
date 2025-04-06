@@ -1,17 +1,18 @@
 ﻿using AntaresPay.Persistence.Entities;
 using SQLite;
+using System.Diagnostics;
 
 namespace AntaresPay.Persistence
 {
     public class SQLiteDatabase
     {
-        public SQLiteConnection Connection { get; private set; }
+        public SQLiteAsyncConnection Connection { get; private set; }
 
-        SQLiteDatabase()
+        public SQLiteDatabase()
         {
             var path = Path.Combine(FileSystem.AppDataDirectory, "database.db");
-            Connection = new SQLiteConnection(path);
-            Connection.CreateTable<Operation>();
+            Connection = new SQLiteAsyncConnection(path);
+            Connection.CreateTableAsync<OperationEntity>().ContinueWith((a) => Debug.WriteLine($"{nameof(OperationEntity)} table ok"));
         }
     }
 }
