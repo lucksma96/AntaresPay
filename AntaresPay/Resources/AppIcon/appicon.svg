@@ -1,4 +1,225 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="456" height="456" viewBox="0 0 456 456" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="0" width="456" height="456" fill="#512BD4" />
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="512"
+   height="512"
+   viewBox="0 0 512 512"
+   sodipodi:docname="appicon.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   inkscape:export-filename="icon16.png"
+   inkscape:export-xdpi="1"
+   inkscape:export-ydpi="1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#7f01ff"
+     borderopacity="0.24705882"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     showguides="true"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="219.2031"
+     inkscape:cy="258.80108"
+     inkscape:window-width="1718"
+     inkscape:window-height="1360"
+     inkscape:window-x="2560"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g101"
+     inkscape:export-bgcolor="#ea6162ff">
+    <inkscape:grid
+       id="grid9"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="1"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="false"
+       dotted="false" />
+  </sodipodi:namedview>
+  <title
+     id="title895">Logo Antares</title>
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient11"
+       inkscape:label="antares-half">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0.25108224"
+         id="stop2" />
+      <stop
+         style="stop-color:#a5504b;stop-opacity:1;"
+         offset="0.5"
+         id="stop3" />
+      <stop
+         style="stop-color:#830003;stop-opacity:1;"
+         offset="1"
+         id="stop4" />
+    </linearGradient>
+    <linearGradient
+       id="swatch1"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+    </linearGradient>
+    <rect
+       x="13.40874"
+       y="648.64783"
+       width="373.40094"
+       height="120.86345"
+       id="rect46" />
+    <linearGradient
+       id="linearGradient48"
+       inkscape:swatch="gradient">
+      <stop
+         style="stop-color:#ff0000;stop-opacity:1;"
+         offset="0"
+         id="stop50" />
+      <stop
+         style="stop-color:#b80000;stop-opacity:1;"
+         offset="1"
+         id="stop51" />
+    </linearGradient>
+    <rect
+       x="684.26477"
+       y="514.97943"
+       width="540.53986"
+       height="75.424164"
+       id="rect45" />
+    <rect
+       x="684.89331"
+       y="514.97943"
+       width="349.97031"
+       height="75.274178"
+       id="rect44" />
+    <rect
+       x="683.84576"
+       y="515.39844"
+       width="540.95886"
+       height="74.586121"
+       id="rect43" />
+    <rect
+       x="683.00769"
+       y="514.14142"
+       width="541.79694"
+       height="76.262215"
+       id="rect42" />
+    <linearGradient
+       id="linearGradient11-2"
+       inkscape:label="antares-light">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop893" />
+      <stop
+         style="stop-color:#a5504b;stop-opacity:1;"
+         offset="0.5"
+         id="stop894" />
+      <stop
+         style="stop-color:#830003;stop-opacity:1;"
+         offset="1"
+         id="stop895" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient11-1"
+       inkscape:label="antares-dark">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop11" />
+      <stop
+         style="stop-color:#830003;stop-opacity:1;"
+         offset="1"
+         id="stop12" />
+    </linearGradient>
+    <rect
+       x="684.89331"
+       y="514.97943"
+       width="349.97031"
+       height="75.274178"
+       id="rect53" />
+    <rect
+       x="13.40874"
+       y="648.64783"
+       width="373.40094"
+       height="120.86345"
+       id="rect15" />
+    <rect
+       x="13.40874"
+       y="648.64783"
+       width="373.40094"
+       height="120.86345"
+       id="rect16" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath17">
+      <rect
+         style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:19.994;stroke-dasharray:none;stroke-opacity:1"
+         id="rect17"
+         width="347.36075"
+         height="18.65514"
+         x="686.16498"
+         y="533.14301"
+         inkscape:label="text-cut" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2">
+      <rect
+         style="display:inline;opacity:1;fill:#ff676c;fill-opacity:1;stroke:#000000;stroke-width:2"
+         id="rect3"
+         width="1920"
+         height="1918"
+         x="14.9726"
+         y="126.3891"
+         inkscape:label="bg" />
+    </clipPath>
+  </defs>
+  <metadata
+     id="metadata895">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Logo Antares</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="layer"
+     id="g101"
+     style="display:inline"
+     transform="matrix(0.26638918,0,0,0.26666666,0.26638924,-6.4453127e-7)">
+    <rect
+       style="display:inline;opacity:1;fill:#ff676c;fill-opacity:1;stroke:#000000;stroke-width:2"
+       id="rect1"
+       width="1920"
+       height="1918"
+       x="-6.6766672"
+       y="126.3891"
+       inkscape:label="bg"
+       transform="translate(6.676667,-125.3891)" />
+  </g>
 </svg>
