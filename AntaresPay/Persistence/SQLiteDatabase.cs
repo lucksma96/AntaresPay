@@ -10,8 +10,12 @@ namespace AntaresPay.Persistence
 
         public SQLiteDatabase()
         {
-            var path = Path.Combine(FileSystem.AppDataDirectory, "database.db");
-            Connection = new SQLiteAsyncConnection(path);
+            if (Connection == null)
+            {
+                var path = Path.Combine(FileSystem.AppDataDirectory, "antarespay.db3");
+                Connection = new SQLiteAsyncConnection(path);
+            }
+
             Connection.CreateTableAsync<OperationEntity>().ContinueWith((a) => Debug.WriteLine($"{nameof(OperationEntity)} table ok"));
         }
     }
