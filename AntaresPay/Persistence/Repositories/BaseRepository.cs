@@ -6,7 +6,7 @@ namespace AntaresPay.Persistence.Repositories;
 public abstract class BaseRepository<T>(SQLiteDatabase database) : IRepository<T>
     where T : BaseEntity, new()
 {
-    private readonly SQLiteDatabase Database = database;
+    public readonly SQLiteDatabase Database = database;
 
     public async Task<int> AddAsync(T entity)
     {
