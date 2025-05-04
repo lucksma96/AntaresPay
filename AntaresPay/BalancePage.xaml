@@ -15,14 +15,13 @@
         <Label Grid.Row="3" Grid.ColumnSpan="2" Text="Extrato" FontSize="28" />
         <CollectionView Grid.Row="4" Grid.ColumnSpan="2" ItemsSource="{Binding Operations}" ItemSizingStrategy="MeasureFirstItem">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="10"></LinearItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"></LinearItemsLayout>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type entity:OperationEntity}">
                     <Border Padding="10">
                         <VerticalStackLayout>
                             <Label Text="{Binding CreatedAt, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" FontSize="16" />
-                            <Label Text="{Binding UnitName}" FontSize="16" />
                             <Label Text="{Binding Type}" />
                             <Label Text="{Binding Value, StringFormat='₳{0:D}'}" FontSize="16" />
                         </VerticalStackLayout>
