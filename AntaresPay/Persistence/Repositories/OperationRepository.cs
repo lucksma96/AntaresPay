@@ -6,6 +6,6 @@ public class OperationRepository(SQLiteDatabase database) : BaseRepository<Opera
 {
     public async Task<List<OperationEntity>> GetByUnitNameAsync(string value)
     {
-        return await Database.Connection.Table<OperationEntity>().Where(x => x.UnitName == value).ToListAsync();
+        return await Database.Connection.Table<OperationEntity>().Where(x => x.UnitName == value).OrderByDescending(x => x.CreatedAt).ToListAsync();
     }
 }
