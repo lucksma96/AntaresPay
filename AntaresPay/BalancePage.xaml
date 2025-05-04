@@ -5,7 +5,12 @@
              xmlns:viewmodel="clr-namespace:AntaresPay.ViewModels"
              x:DataType="viewmodel:BalanceViewModel"
              xmlns:entity="clr-namespace:AntaresPay.Persistence.Entities"
+             xmlns:local="clr-namespace:AntaresPay.Converters"
              Title="Extrato">
+    <ContentPage.Resources>
+        <local:OperationTypeEnumToStringConverter x:Key="operationTypeToString" />
+    </ContentPage.Resources>
+
     <Grid Margin="20" RowDefinitions="20, 35, 35, 35, 1*, 75" RowSpacing="5" ColumnDefinitions="50*, 50*">
         <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Aproxime o cartão" FontSize="16" HorizontalOptions="Center"></Label>
         <Label Grid.Row="1" Grid.Column="0" Text="Unidade:" FontSize="28"></Label>
@@ -22,7 +27,7 @@
                     <Border Padding="10">
                         <VerticalStackLayout>
                             <Label Text="{Binding CreatedAt, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" FontSize="16" />
-                            <Label Text="{Binding Type}" />
+                            <Label Text="{Binding Type, Converter={StaticResource operationTypeToString}}" />
                             <Label Text="{Binding Value, StringFormat='₳{0:D}'}" FontSize="16" />
                         </VerticalStackLayout>
                     </Border>
