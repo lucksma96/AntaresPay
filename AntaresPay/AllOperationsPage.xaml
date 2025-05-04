@@ -5,7 +5,11 @@
              xmlns:viewmodel="clr-namespace:AntaresPay.ViewModels"
              x:DataType="viewmodel:AllOperationsViewModel"
              xmlns:entity="clr-namespace:AntaresPay.Persistence.Entities"
+             xmlns:local="clr-namespace:AntaresPay.Converters"
              Title="Todas Operações">
+    <ContentPage.Resources>
+        <local:OperationTypeEnumToStringConverter x:Key="operationTypeToString" />
+    </ContentPage.Resources>
 
     <Grid Margin="20" RowDefinitions="1*, 75" RowSpacing="5">
         <CollectionView Grid.Row="0" ItemsSource="{Binding Operations}" ItemSizingStrategy="MeasureFirstItem" ItemsLayout="VerticalList" VerticalScrollBarVisibility="Never">
