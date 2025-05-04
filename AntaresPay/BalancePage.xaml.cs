@@ -73,10 +73,11 @@ public partial class BalancePage : ContentPage
 
         // Customized serial number
         var identifier = tagInfo.Identifier;
-        var serialNumber = NFCUtils.ByteArrayToHexString(identifier, ":");
+        _ = NFCUtils.ByteArrayToHexString(identifier, ":");
 
         var first = tagInfo.Records[0];
-        _vm.UnitData = GetUnitData(first);
+        _vm.UnitData = ParseUnitData(first);
+        await _vm.LoadOperationsCommand.ExecuteAsync(_vm.UnitData.Name);
     }
 
     async Task StartListeningIfNotiOS()
@@ -121,9 +122,9 @@ public partial class BalancePage : ContentPage
         }
     }
 
-    Task ShowAlert(string message, string title = null) => DisplayAlert(string.IsNullOrWhiteSpace(title) ? ALERT_TITLE : title, message, "OK");
+    Task ShowAlert(string message, string? title = null) => DisplayAlert(string.IsNullOrWhiteSpace(title) ? ALERT_TITLE : title, message, "OK");
 
-    UnitData GetUnitData(NFCNdefRecord record)
+    UnitData ParseUnitData(NFCNdefRecord record)
     {
         var data = JsonSerializer.Deserialize<UnitData>(record.Message, _serializeOptions);
         if (data is null || !data.IsValidUnit())
