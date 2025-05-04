@@ -1,4 +1,7 @@
+using AntaresPay.Enums;
 using AntaresPay.Models;
+using AntaresPay.Persistence.Entities;
+using AntaresPay.Persistence.Repositories;
 using AntaresPay.ViewModels;
 using Plugin.NFC;
 using System.Text.Json;
@@ -7,6 +10,7 @@ namespace AntaresPay;
 
 public partial class TransactionPage : ContentPage
 {
+    private readonly OperationRepository _operationRepository;
     private readonly TransactionViewModel _vm;
     public const string ALERT_TITLE = "NFC";
     public const string MIME_TYPE = "application/json";
@@ -18,8 +22,9 @@ public partial class TransactionPage : ContentPage
         WriteIndented = false
     };
 
-    public TransactionPage(TransactionViewModel vm)
+    public TransactionPage(TransactionViewModel vm, OperationRepository operationRepository)
     {
+        _operationRepository = operationRepository;
         InitializeComponent();
         BindingContext = _vm = vm;
         Loaded += TransactionPage_Loaded;
@@ -90,6 +95,7 @@ public partial class TransactionPage : ContentPage
         {
             UnsubscribeEvents();
             await ShowAlert("Sucesso!"); // TODO: (message) Writing tag operation successful
+            await RecordTransaction();
             await _vm.GoHomeCommand.ExecuteAsync(null);
         }
         catch (Exception ex)
@@ -113,7 +119,7 @@ public partial class TransactionPage : ContentPage
             var first = tagInfo.Records[0];
 
             var unitData = GetUnitData(first);
-            CommitTransaction(unitData, _vm.Operation, _vm.Value);
+            ProcessTransaction(unitData, _vm.Operation, _vm.Value);
             _vm.UnitData = unitData;
 
             if (_vm.UnitData is null)
@@ -183,7 +189,7 @@ public partial class TransactionPage : ContentPage
         }
     }
 
-    private void CommitTransaction(UnitData unitData, string? operation, int value)
+    private void ProcessTransaction(UnitData unitData, string? operation, int value)
     {
         switch (operation)
         {
@@ -196,5 +202,18 @@ public partial class TransactionPage : ContentPage
             default:
                 break;
         }
+    }
+
+    private async Task RecordTransaction()
+    {
+        var operation = new OperationEntity
+        {
+            UnitName = _vm.UnitData?.Name,
+            Value = _vm.Value,
+            Type = _vm.Operation == "Pagar" ? OperationTypeEnum.Payment : OperationTypeEnum.Charge,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        await _operationRepository.AddAsync(operation);
     }
 }
