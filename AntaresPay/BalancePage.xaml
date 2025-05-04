@@ -4,17 +4,36 @@
              x:Class="AntaresPay.BalancePage"
              xmlns:viewmodel="clr-namespace:AntaresPay.ViewModels"
              x:DataType="viewmodel:BalanceViewModel"
+             xmlns:entity="clr-namespace:AntaresPay.Persistence.Entities"
+             xmlns:local="clr-namespace:AntaresPay.Converters"
              Title="Extrato">
-    <VerticalStackLayout Padding="30" Spacing="10">
-        <HorizontalStackLayout>
-            <Label Text="Unidade: " FontSize="32"></Label>
-            <Label Text="{Binding UnitData.Name}" FontSize="32" VerticalOptions="Center" HorizontalOptions="Start" />
-        </HorizontalStackLayout>
-        <HorizontalStackLayout>
-            <Label Text="Saldo: " FontSize="28"></Label>
-            <Label Text="{Binding UnitData.Balance, StringFormat='₳{0:D}'}" FontSize="28" VerticalOptions="Center" HorizontalOptions="Start" />
-        </HorizontalStackLayout>
-        <Label Text="Aproxime o cartão" FontSize="16" HorizontalOptions="Center"></Label>
-        <Button Text="Voltar" FontSize="24" Command="{Binding ReturnCommand}"></Button>
-    </VerticalStackLayout>
+    <ContentPage.Resources>
+        <local:OperationTypeEnumToStringConverter x:Key="operationTypeToString" />
+    </ContentPage.Resources>
+
+    <Grid Margin="20" RowDefinitions="20, 35, 35, 35, 1*, 75" RowSpacing="5" ColumnDefinitions="50*, 50*">
+        <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Aproxime o cartão" FontSize="16" HorizontalOptions="Center"></Label>
+        <Label Grid.Row="1" Grid.Column="0" Text="Unidade:" FontSize="28"></Label>
+        <Label Grid.Row="1" Grid.Column="1" Text="{Binding UnitData.Name}" FontSize="28" />
+        <Label Grid.Row="2" Grid.Column="0" Text="Saldo: " FontSize="28"></Label>
+        <Label Grid.Row="2" Grid.Column="1" Text="{Binding UnitData.Balance, StringFormat='₳{0:D}'}" FontSize="28" />
+        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="Extrato" FontSize="28" />
+        <CollectionView Grid.Row="4" Grid.ColumnSpan="2" ItemsSource="{Binding Operations}" ItemSizingStrategy="MeasureFirstItem">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"></LinearItemsLayout>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type entity:OperationEntity}">
+                    <Border Padding="10">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding CreatedAt, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" FontSize="16" />
+                            <Label Text="{Binding Type, Converter={StaticResource operationTypeToString}}" />
+                            <Label Text="{Binding Value, StringFormat='₳{0:D}'}" FontSize="16" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Grid.Row="5" Grid.ColumnSpan="2" Margin="0, 15" Text="Voltar" FontSize="24" Command="{Binding ReturnCommand}"></Button>
+    </Grid>
 </ContentPage>

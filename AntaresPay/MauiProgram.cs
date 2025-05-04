@@ -1,4 +1,7 @@
-﻿using AntaresPay.ViewModels;
+﻿using AntaresPay.Enums;
+using AntaresPay.Persistence;
+using AntaresPay.Persistence.Repositories;
+using AntaresPay.ViewModels;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
@@ -19,6 +22,9 @@ namespace AntaresPay
                 });
 
             builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<SQLiteDatabase>();
+
+            builder.Services.AddTransient<OperationRepository>();
 
             builder.Services.AddTransient<OperationPage>();
             builder.Services.AddTransient<OperationViewModel>();
@@ -31,6 +37,9 @@ namespace AntaresPay
 
             builder.Services.AddTransient<RegisterPage>();
             builder.Services.AddTransient<RegisterViewModel>();
+
+            builder.Services.AddTransient<AllOperationsPage>();
+            builder.Services.AddTransient<AllOperationsViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();

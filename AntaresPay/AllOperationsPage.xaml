@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AntaresPay.AllOperationsPage"
+             xmlns:viewmodel="clr-namespace:AntaresPay.ViewModels"
+             x:DataType="viewmodel:AllOperationsViewModel"
+             xmlns:entity="clr-namespace:AntaresPay.Persistence.Entities"
+             xmlns:local="clr-namespace:AntaresPay.Converters"
+             Title="Todas Operações">
+    <ContentPage.Resources>
+        <local:OperationTypeEnumToStringConverter x:Key="operationTypeToString" />
+    </ContentPage.Resources>
+
+    <Grid Margin="20" RowDefinitions="1*, 75" RowSpacing="5">
+        <CollectionView Grid.Row="0" ItemsSource="{Binding Operations}" ItemSizingStrategy="MeasureFirstItem" ItemsLayout="VerticalList" VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type entity:OperationEntity}">
+                    <Border Padding="10">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding CreatedAt, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" FontSize="16" />
+                            <Label Text="{Binding UnitName}"/>
+                            <Label Text="{Binding Type, Converter={StaticResource operationTypeToString}}" />
+                            <Label Text="{Binding Value, StringFormat='₳{0:D}'}" FontSize="16" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
