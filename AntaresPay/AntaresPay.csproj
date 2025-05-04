@@ -79,6 +79,9 @@
 	  <MauiXaml Update="BalancePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="AllOperationsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="OperationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

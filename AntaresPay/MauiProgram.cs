@@ -1,4 +1,5 @@
-﻿using AntaresPay.Persistence;
+﻿using AntaresPay.Enums;
+using AntaresPay.Persistence;
 using AntaresPay.Persistence.Repositories;
 using AntaresPay.ViewModels;
 using CommunityToolkit.Maui;
@@ -36,6 +37,9 @@ namespace AntaresPay
 
             builder.Services.AddTransient<RegisterPage>();
             builder.Services.AddTransient<RegisterViewModel>();
+
+            builder.Services.AddTransient<AllOperationsPage>();
+            builder.Services.AddTransient<AllOperationsViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();
