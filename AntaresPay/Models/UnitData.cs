@@ -7,7 +7,7 @@ public class UnitData
         "phoenix",
         "scorpion",
         "andromeda",
-        "europa",
+        "centauro",
         "hercules",
         "alpha",
         "lyra",
