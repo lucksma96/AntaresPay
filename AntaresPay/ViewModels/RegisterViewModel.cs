@@ -12,7 +12,7 @@ public partial class RegisterViewModel : ObservableObject
             new UnitData() { Id = "phoenix", Name = "Phoenix" },
             new UnitData() { Id = "scorpion", Name = "Scorpion" },
             new UnitData() { Id = "andromeda", Name = "Andrômeda" },
-            new UnitData() { Id = "europa", Name = "Europa" },
+            new UnitData() { Id = "centauro", Name = "Centauro" },
             new UnitData() { Id = "hercules", Name = "Hércules" },
             // femininas
             new UnitData() { Id = "alpha", Name = "Alpha" },
